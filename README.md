@@ -25,9 +25,9 @@ Typical Relays - nothing more to be said.
 Alarms
 ---------------------
 At it's core it is simply a switch for a buzzer on the Arduino. It has different levels of alarm annoyance:
--LOWALARM (beeping every once in a while)
--HIGHALARM (constant beeping)
--URGENTALARM (constant tone, I keep this one for impending catastrophic failure)
+* LOWALARM (beeping every once in a while)
+* HIGHALARM (constant beeping)
+* URGENTALARM (constant tone, I keep this one for impending catastrophic failure)
 
 It also has an inactivity alarm that goes on when your board stops receiving signals from HASS (and turns off when connection is established). I set the default on PIN 13 because that's where the built in LED is.
 
