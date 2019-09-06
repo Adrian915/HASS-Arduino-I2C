@@ -4,8 +4,6 @@ Supports switches, sensors (digital / analogue read, DHT) and alarms.
 
 Communication is done via [SMBUS2](https://pypi.org/project/smbus2/) so you will need it set up on your system.
 
-.. code:: bash
-
     pip install smbus2
 
 Steps to get it working:
