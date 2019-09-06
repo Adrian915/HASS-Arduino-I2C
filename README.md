@@ -2,7 +2,7 @@
 Home Assistent custom component that enables I2C communication with an Arduino. I built this because the pins on my OrangePI Zero board were not enough and I had an Arduino Mega 2560 available.
 Supports switches, sensors (digital / analogue read, DHT) and alarms.
 
-Communication is done via `SMBUS2 <https://pypi.org/project/smbus2/>`__ so you will need it set up on your system.
+Communication is done via [SMBUS2](https://pypi.org/project/smbus2/) so you will need it set up on your system.
 
 .. code:: bash
 
