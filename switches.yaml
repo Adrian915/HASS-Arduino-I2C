@@ -1,0 +1,24 @@
+### switches.yaml
+
+- platform: I2C
+  i2c_address: 0x04
+  pins:
+    13:
+      name: Audio Alarm
+      negate: true
+    12:
+      name: Parking - Car Warmer 2
+      negate: true
+    11:
+      name: Parking - Car Warmer 1
+      negate: true
+    10:
+      name: Pump House - Main Heating
+      negate: true
+    9:
+      name: Pump House - Wire Heating
+      negate: true
+    8:
+      name: Outside Lights
+      negate: true
+      

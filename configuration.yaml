@@ -1,0 +1,16 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  
+# I2C communication
+I2C:
+  i2c_bus: 0
+
+sensor: !include sensors.yaml
+switch: !include switches.yaml
+
+notify:
+  - name: audio_alarm
+    platform: I2C
+    i2c_address: 0x04
+    pin: 13

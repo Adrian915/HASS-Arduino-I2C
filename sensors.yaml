@@ -1,0 +1,23 @@
+### sensors.yaml
+#### I2C ##################################
+- platform: I2C
+  i2c_address: 0x04
+  scan_interval: 5
+  pins:
+    # DHT 22 sensor
+    7:
+        name: Outside
+        monitored_conditions:
+            - temperature
+            - humidity
+    # DHT 22 sensor
+    6:
+        name: Utility Room
+        monitored_conditions:
+            - temperature
+            - humidity
+    # A0 is pin 54 on the mega - Light sensor
+    54:
+        name: Light Outside
+        monitored_conditions:
+            - analogue_value
