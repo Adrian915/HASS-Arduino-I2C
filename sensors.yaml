@@ -1,22 +1,45 @@
 ### sensors.yaml
+#### sun ##################################
+- platform: yr
+#### timedate ##################################
+- platform: time_date
+  display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'
+ #### command line ##################################
+- platform: command_line
+  name: CPU Temperature
+  command: "cat /sys/class/thermal/thermal_zone0/temp"
+  # If errors occur, remove degree symbol below
+  unit_of_measurement: "°C"
 #### I2C ##################################
 - platform: I2C
   i2c_address: 0x04
   scan_interval: 5
   pins:
-    # DHT 22 sensor
     7:
         name: Outside
         monitored_conditions:
             - temperature
             - humidity
-    # DHT 22 sensor
+        unique_id: 6589306298
     6:
         name: Utility Room
         monitored_conditions:
             - temperature
             - humidity
-    # A0 is pin 54 on the mega - Light sensor
+        unique_id: 7258696298
+    5:
+        name: Pump House
+        monitored_conditions:
+            - temperature
+            - humidity
+        unique_id: 2699306298
+    # A0 is pin 54 on the mega
     54:
         name: Light Outside
         monitored_conditions:

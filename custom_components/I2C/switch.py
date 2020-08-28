@@ -9,11 +9,16 @@ import logging
 import voluptuous as vol
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.components.switch import (SwitchDevice, PLATFORM_SCHEMA)
+from homeassistant.components.switch import (SwitchEntity, PLATFORM_SCHEMA)
 import homeassistant.helpers.config_validation as cv
-from homeassistant.const import CONF_NAME
+
+from homeassistant.const import (
+    CONF_NAME,
+    ATTR_FRIENDLY_NAME
+)
 
 import custom_components.I2C as I2C
+
 
 DEPENDENCIES = ['I2C']
 
@@ -24,6 +29,7 @@ ADDRESS = 4
 CONF_PINS = 'pins'
 CONF_NEGATE = 'negate'
 CONF_INITIAL = 'initial'
+CONF_UNIQUE_ID = 'unique_id'
 
 CONF_I2C_ADDRESS = 'i2c_address'
 DEFAULT_I2C_ADDRESS = '0x04'
@@ -34,6 +40,8 @@ PIN_SCHEMA = vol.Schema({
     vol.Required(CONF_NAME): cv.string,
     vol.Optional(CONF_INITIAL, default=False): cv.boolean,
     vol.Optional(CONF_NEGATE, default=False): cv.boolean,
+    vol.Optional(ATTR_FRIENDLY_NAME): cv.string,
+    vol.Optional(CONF_UNIQUE_ID): cv.string,
 })
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
@@ -63,7 +71,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     add_devices(switches)
 
 
-class I2CSwitch(SwitchDevice):
+class I2CSwitch(SwitchEntity):
     """Representation of a I2C switch."""
 
     def __init__(self, pin, address, board, options):
@@ -74,7 +82,9 @@ class I2CSwitch(SwitchDevice):
         self._board = board
         self._state = options.get(CONF_INITIAL)
         self._negate = options.get(CONF_NEGATE)
-
+        self._friendly_name = options.get(ATTR_FRIENDLY_NAME)
+        self._unique_id = options.get(CONF_UNIQUE_ID)
+        
         if  self._negate:
             self.turn_on_handler = I2C.BOARD.set_digital_low
             self.turn_off_handler = I2C.BOARD.set_digital_high
@@ -88,6 +98,11 @@ class I2CSwitch(SwitchDevice):
     def name(self):
         """Get the name of the pin."""
         return self._name
+        
+    @property
+    def unique_id(self):
+        """Return the unique id of this switch."""
+        return self._unique_id
 
     @property
     def is_on(self):

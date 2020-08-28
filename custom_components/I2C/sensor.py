@@ -15,7 +15,15 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.util import Throttle
 import homeassistant.helpers.config_validation as cv
 from homeassistant.const import (
-    TEMP_CELSIUS, TEMP_FAHRENHEIT, CONF_NAME, CONF_MONITORED_CONDITIONS)
+    ATTR_DEVICE_CLASS,
+    DEVICE_CLASS_HUMIDITY,
+    DEVICE_CLASS_TEMPERATURE,
+    TEMP_CELSIUS,
+    UNIT_PERCENTAGE,
+    TIME_HOURS,
+    UNIT_PERCENTAGE, 
+    CONF_NAME, 
+    CONF_MONITORED_CONDITIONS)
 import custom_components.I2C as I2C
 
 REQUIREMENTS = ['i2csense==0.0.4',
@@ -31,15 +39,16 @@ CONF_PINS = 'pins'
 
 CONF_I2C_ADDRESS = 'i2c_address'
 DEFAULT_I2C_ADDRESS = '0x04'
+CONF_UNIQUE_ID = 'unique_id'
 
 SENSOR_TEMPERATURE = 'temperature'
 SENSOR_HUMIDITY = 'humidity'
 SENSOR_ANALOGUE_VALUE = 'analogue_value'
 
 SENSOR_TYPES = {
-    SENSOR_TEMPERATURE: ['temperature', TEMP_CELSIUS],
-    SENSOR_HUMIDITY: ['humidity', '%'],
-    SENSOR_ANALOGUE_VALUE: ['Percentage', '%'],
+    SENSOR_TEMPERATURE: ['Temperature', TEMP_CELSIUS, "mdi:thermometer"],
+    SENSOR_HUMIDITY: ["Humidity", UNIT_PERCENTAGE, "mdi:water-percent"],
+    SENSOR_ANALOGUE_VALUE: ['Percentage', UNIT_PERCENTAGE, "mdi:theme-light-dark"],
 }
 DEFAULT_NAME = 'I2C Sensor'
 
@@ -50,6 +59,7 @@ PIN_SCHEMA = vol.Schema({
     vol.Required(CONF_NAME): cv.string,
     vol.Optional(CONF_MONITORED_CONDITIONS, default=[]):
        vol.All(cv.ensure_list, [vol.In(SENSOR_TYPES)]),
+    vol.Optional(CONF_UNIQUE_ID): cv.string,
 })
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
@@ -99,11 +109,17 @@ class I2CDHTSensor(Entity):
         self._unit_of_measurement = SENSOR_TYPES[sensor_type][1]
         self._value = None
         self._fail_attempts = 0
+        self._unique_id = options.get(CONF_UNIQUE_ID)
 
     @property
     def name(self):
         """Get the name of the pin."""
         return self._name
+        
+    @property
+    def icon(self):
+        """Icon to use in the frontend."""
+        return SENSOR_TYPES[self._type][2]
 
     @property
     def state(self):

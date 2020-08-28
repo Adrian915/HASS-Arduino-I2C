@@ -5,20 +5,26 @@
   pins:
     13:
       name: Audio Alarm
-      negate: true
     12:
       name: Parking - Car Warmer 2
+      friendly_name: Car Warmer 2
       negate: true
+      unique_id: 6746389900
     11:
       name: Parking - Car Warmer 1
+      friendly_name: Car Warmer 1
       negate: true
+      unique_id: 3027517552
     10:
       name: Pump House - Main Heating
+      friendly_name: Main Heating
       negate: true
+      unique_id: 7289306298
     9:
       name: Pump House - Wire Heating
+      friendly_name: Wire Heating
       negate: true
+      unique_id: 5844853394
     8:
       name: Outside Lights
       negate: true
-      
